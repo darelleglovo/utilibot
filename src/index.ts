@@ -48,7 +48,7 @@ app.get('/webhook', (req, res) => {
 app.post('/webhook', (req, res) => {
 
     const sendMessage = (senderPSID: string, message: string) => {
-        request.post(`https://graph.facebook.com/v2.6/me/messages?access_token=${GRAPH_TOKEN}`, {
+        request.post(`https://graph.facebook.com/v6.0/me/messages?access_token=${GRAPH_TOKEN}`, {
             json: {
                 "recipient": {
                     "id": senderPSID
@@ -70,7 +70,7 @@ app.post('/webhook', (req, res) => {
     // Handles messages events
     const handleMessage = (senderPSID: string, receivedMessage: any) => {
 
-        request.post(`https://graph.facebook.com/v2.6/me/messages?access_token=${GRAPH_TOKEN}`, {
+        request.post(`https://graph.facebook.com/v6.0/me/messages?access_token=${GRAPH_TOKEN}`, {
             json: {
                 "recipient": {
                     "id": senderPSID
