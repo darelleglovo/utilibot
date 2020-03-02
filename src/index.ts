@@ -108,11 +108,11 @@ app.post('/webhook', (req, res) => {
                 break;
             case "help":
                 sendMessage(senderPSID,
-                    `
-                    Searching:
-                    > Type "search <space> <keyword to search>"
-                    > Example: search gravity
-                    `)
+                `
+                Searching:
+                > Type "search <space> <keyword to search>"
+                > Example: search gravity
+                `)
                 break;
             default:
                 sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
