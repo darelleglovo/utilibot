@@ -122,7 +122,13 @@ app.post('/webhook', (req, res) => {
 				> Type "search <space> <keyword to search>"
 				> Example: search gravity
                 `;
+                const b = dedent`
+				Searching:
+				> Type "search <space> <keyword to search>"
+				> Example: search gravity
+                `;
                 sendMessage(senderPSID, a)
+                sendMessage(senderPSID, b)
                 break;
             default:
                 sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
