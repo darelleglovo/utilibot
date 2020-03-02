@@ -108,9 +108,9 @@ app.post('/webhook', (req, res) => {
                 break;
             case "help":
                 const a = `
-                \test
-                \test
-                \s
+                \ test
+                \ test
+                \ s
                 `
                 sendMessage(senderPSID, a)
                 break;
