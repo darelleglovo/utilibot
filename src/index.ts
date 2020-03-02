@@ -1,7 +1,8 @@
-import express from "express";
-import * as bodyParser from "body-parser";
+import express from 'express';
+import * as bodyParser from 'body-parser';
 import request from 'request';
 import { APIs } from './variables';
+import dedent from 'dedent-js';
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -107,10 +108,10 @@ app.post('/webhook', (req, res) => {
                 });
                 break;
             case "help":
-                const a = `
-                \ test
-                \ test
-                \ s
+                const a = dedent`
+                test
+                test
+                t
                 `
                 sendMessage(senderPSID, a)
                 break;
