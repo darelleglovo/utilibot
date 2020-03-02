@@ -100,10 +100,14 @@ app.post('/webhook', (req, res) => {
                         const object = Object.keys(pages)[text-1];
                         console.log(object);
                         console.log(pages[object]);
-                        const response = pages[object].title + '\n' + pages[object].extract
-                        console.log(response);
+                        const contentBody = pages[object].extract.split('\\n');
+                        // const response = pages[object].title + '\n' + pages[object].extract
+                        // console.log(response);
+                        for (let i = 0; i <= contentBody.length; i++) {
+                            sendMessage(senderPSID, contentBody);
+                        }
                         cache.del(senderPSID);
-                        sendMessage(senderPSID, response);
+                        // sendMessage(senderPSID, response);
                     });
                 }
             }
