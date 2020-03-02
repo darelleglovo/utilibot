@@ -90,7 +90,7 @@ app.post('/webhook', (req, res) => {
         const isCached = cache.get(senderPSID);
         if (isCached) {
             const currentCache = cache.get(senderPSID);
-            switch (query[0].toLowerCase()) {
+            switch (currentCache[0]) {
                 case 'search': {
                     const searchKeyword = currentCache.split(':')[1];
                     console.log(searchKeyword);
