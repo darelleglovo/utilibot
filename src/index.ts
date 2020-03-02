@@ -87,8 +87,6 @@ app.post('/webhook', (req, res) => {
 
         const text = receivedMessage.text
         const query = text.split(" ")
-        cache.put(senderPSID, query);
-        console.log(cache.get(senderPSID));
         switch (query[0].toLowerCase()) {
             case 'search':
                 const searchKeyword = text.split(' ').slice(1).join(' ') // remove 1st word
@@ -98,16 +96,22 @@ app.post('/webhook', (req, res) => {
                 }
                 request(APIs.WIKIPEDIA + searchKeyword, { json: true }, (err, res, body) => {
                     if (err) { return console.log(err); }
+                    // for (const searchResult in body.query.pages) {
+                    //     const { pages } = body.query;
+                    //     console.log(body.query.pages[searchResult])
+                    //     sendMessage(senderPSID,
+                    //     dedent`
+                    //     ${pages[searchResult].title}
+
+                    //     ${pages[searchResult].extract}
+                    //     `)
+                    // }
+                    let choices = dedent``;
                     for (const searchResult in body.query.pages) {
                         const { pages } = body.query;
-                        console.log(body.query.pages[searchResult])
-                        sendMessage(senderPSID,
-                        dedent`
-                        ${pages[searchResult].title}
-
-                        ${pages[searchResult].extract}
-                        `)
+                        choices += pages[searchResult].title + '\n'
                     }
+                    sendMessage(senderPSID, choices);
                 });
                 break;
             case "help":
