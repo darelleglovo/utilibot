@@ -90,7 +90,8 @@ app.post('/webhook', (req, res) => {
         const query = text.split(" ")
         switch (query[0].toLowerCase()) {
             case "help":
-                sendMessage(senderPSID,`Test Help
+                sendMessage(senderPSID,`
+                Test Help
                 Test Multiline
                 Test
                 `)
