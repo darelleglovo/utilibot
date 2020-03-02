@@ -6,6 +6,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // const port = 8080; // default port to listen
+const GRAPH_TOKEN = process.env.GRAPH_TOKEN;
 
 // start the Express server /
 app.listen(process.env.PORT, () => console.log('Example app listening on port env!'));
@@ -17,7 +18,7 @@ app.get("/", (req, res) => {
 
 app.get('/webhook', (req, res) => {
     // Your verify token. Should be a random string.
-    const VERIFY_TOKEN = "this_is_a_test";
+    const VERIFY_TOKEN = process.env.WEBHOOK_VERIFY_TOKEN;
 
     // Parse the query params
     const mode = req.query['hub.mode'];
@@ -47,7 +48,7 @@ app.get('/webhook', (req, res) => {
 app.post('/webhook', (req, res) => {
 
     const sendMessage = (senderPSID: string, message: string) => {
-        request.post('https://graph.facebook.com/v2.6/me/messages?access_token=EAAncf3VobmkBALlUVNCvRAmhhZAxD2jfxuiNl0QLWM7ERmDI2x7Ih8DZCEadxPRqMMCIuuGZCtDNIhLtLpVwZB2xZB5ZBGVfyvnADZCJpIqJ4ugftL1g7bvkErAUftseTdQMd2uHrbwMRCjZAxgUZCmUhl37RbcYdKBVV80zr7lK9IHasnJ5mqjmW3QlikNAvyiQZD', {
+        request.post(`https://graph.facebook.com/v2.6/me/messages?access_token=${GRAPH_TOKEN}`, {
             json: {
                 "recipient": {
                     "id": senderPSID
@@ -69,7 +70,7 @@ app.post('/webhook', (req, res) => {
     // Handles messages events
     const handleMessage = (senderPSID: string, receivedMessage: any) => {
 
-        request.post('https://graph.facebook.com/v2.6/me/messages?access_token=EAAncf3VobmkBALlUVNCvRAmhhZAxD2jfxuiNl0QLWM7ERmDI2x7Ih8DZCEadxPRqMMCIuuGZCtDNIhLtLpVwZB2xZB5ZBGVfyvnADZCJpIqJ4ugftL1g7bvkErAUftseTdQMd2uHrbwMRCjZAxgUZCmUhl37RbcYdKBVV80zr7lK9IHasnJ5mqjmW3QlikNAvyiQZD', {
+        request.post(`https://graph.facebook.com/v2.6/me/messages?access_token=${GRAPH_TOKEN}`, {
             json: {
                 "recipient": {
                     "id": senderPSID
