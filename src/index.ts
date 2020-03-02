@@ -56,7 +56,7 @@ app.post('/webhook', (req, res) => {
                     "text": message
                 }
             }
-        }, (error, res, body) => {
+        }, (error) => {
             if (error) {
                 console.error(error)
                 return
@@ -76,7 +76,7 @@ app.post('/webhook', (req, res) => {
                 },
                 "sender_action": "typing_on"
             }
-        }, (error, res, body) => {
+        }, (error) => {
             if (error) {
                 console.error(error)
                 return
@@ -114,15 +114,15 @@ app.post('/webhook', (req, res) => {
     if (body.object === 'page') {
 
         // Iterates over each entry - there may be multiple if batched
-        body.entry.forEach(function (entry: any) {
+        body.entry.forEach((entry: any) => {
 
             // Gets the message. entry.messaging is an array, but
             // will only ever contain one message, so we get index 0
-            let webhookEvent = entry.messaging[0];
+            const webhookEvent = entry.messaging[0];
             console.log(webhookEvent);
 
             // Get the sender PSID
-            let senderPSID = webhookEvent.sender.id;
+            const senderPSID = webhookEvent.sender.id;
             console.log('Sender PSID: ' + senderPSID);
 
             // Check if the event is a message or postback and
