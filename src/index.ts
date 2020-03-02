@@ -97,10 +97,11 @@ app.post('/webhook', (req, res) => {
                     request(APIs.WIKIPEDIA + searchKeyword, { json: true }, (err, res, body) => {
                         if (err) { return console.log(err); }
                         const { pages } = body.query;
+                        const object = Object.keys(pages)[text];
                         console.log(pages);
                         const response = `
-						${Object.keys(pages)[text]}
-						${Object.keys(pages)[text]}
+						${pages[object].title}
+						${pages[object].content}
                         `;
                         cache.del(senderPSID);
                         sendMessage(senderPSID, response);
