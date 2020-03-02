@@ -4,11 +4,13 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
+    "postinstall": "npm run tsc",
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "rm -rf dist/ && tsc",
     "prestart": "npm run build",
     "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc"
   },
   "keywords": [],
   "author": "",
