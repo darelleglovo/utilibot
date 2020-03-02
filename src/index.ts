@@ -63,8 +63,6 @@ app.post('/webhook', (req, res) => {
                 console.error(error)
                 return
             }
-            // console.log(`statusCode: ${res.statusCode}`)
-            // console.log(body)
         })
     }
 
@@ -83,8 +81,6 @@ app.post('/webhook', (req, res) => {
                 console.error(error)
                 return
             }
-            // console.log(`statusCode: ${res.statusCode}`)
-            // console.log(body)
         })
 
         const text = receivedMessage.text
@@ -101,9 +97,13 @@ app.post('/webhook', (req, res) => {
                     for (const searchResult in body.query.pages) {
                         const { pages } = body.query;
                         console.log(body.query.pages[searchResult])
-                        sendMessage(senderPSID, pages[searchResult].title + "\n \n" + pages[searchResult].extract)
-                    }
+                        sendMessage(senderPSID,
+                        `
+                        ${pages[searchResult].title}
 
+                        ${pages[searchResult].extract}
+                        `)
+                    }
                 });
                 break;
             case "help":
