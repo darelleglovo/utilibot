@@ -98,7 +98,7 @@ app.post('/webhook', (req, res) => {
                         if (err) { return console.log(err); }
                         const { pages } = body.query;
                         const object = Object.keys(pages)[text];
-                        console.log(pages);
+                        console.log(object);
                         const response = pages[object].title + '\n' + pages[object].extract
                         cache.del(senderPSID);
                         sendMessage(senderPSID, response);
