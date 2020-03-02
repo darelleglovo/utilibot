@@ -120,17 +120,15 @@ app.post('/webhook', (req, res) => {
                 const a = dedent`
 				Searching:
                 > Type "search <space> <keyword to search>"
-                Example: search gravity
-                \n
+                > Example: search gravity
                 `;
                 const b = dedent`
-				Searching2:
+				Searching test2:
                 > Type "search <space> <keyword to search>"
-                Example: search gravity
-                \n
+                > Example: search gravity
                 `;
-                const x = a + b
-                sendMessage(senderPSID, x)
+                sendMessage(senderPSID, a);
+                sendMessage(senderPSID, b);
                 break;
             default:
                 sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
