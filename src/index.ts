@@ -90,11 +90,12 @@ app.post('/webhook', (req, res) => {
         const query = text.split(" ")
         switch (query[0].toLowerCase()) {
             case "help":
-                sendMessage(
-                    senderPSID,
-                    `asdasd
-                    sdsdsd
-                    asdasdadsa`)
+                sendMessage(senderPSID,
+                    `
+                    Searching:
+                    > Type "search <space> <keyword to search>"
+                    > Example: search gravity
+                    `)
                 break;
             default:
                 sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
