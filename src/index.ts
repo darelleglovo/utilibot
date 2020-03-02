@@ -3,6 +3,7 @@ import * as bodyParser from 'body-parser';
 import request from 'request';
 import { APIs } from './variables';
 import dedent from 'dedent-js';
+import cache from 'memory-cache';
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -86,6 +87,8 @@ app.post('/webhook', (req, res) => {
 
         const text = receivedMessage.text
         const query = text.split(" ")
+        cache.put(senderPSID, query);
+        console.log(cache.get(senderPSID));
         switch (query[0].toLowerCase()) {
             case 'search':
                 const searchKeyword = text.split(' ').slice(1).join(' ') // remove 1st word
@@ -109,9 +112,9 @@ app.post('/webhook', (req, res) => {
                 break;
             case "help":
                 const a = dedent`
-                test
-                test
-                t
+				Searching:
+				> Type "search <space> <keyword to search>"
+				> Example: search gravity
                 `
                 sendMessage(senderPSID, a)
                 break;
@@ -142,7 +145,7 @@ app.post('/webhook', (req, res) => {
             console.log(webhookEvent);
 
             // Get the sender PSID
-            const senderPSID = webhookEvent.sender.id;
+            const senderPSID: string = webhookEvent.sender.id;
             console.log('Sender PSID: ' + senderPSID);
 
             // Check if the event is a message or postback and
@@ -164,9 +167,3 @@ app.post('/webhook', (req, res) => {
     }
 
 });
-
-// start the Express server
-// app.listen( port, () => {
-//     // tslint:disable-next-line:no-console
-//     console.log( `server started at http://localhost:${ port }` );
-// } );
