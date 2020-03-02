@@ -89,14 +89,14 @@ app.post('/webhook', (req, res) => {
         const query = text.split(" ")
         const isCached = cache.get(senderPSID);
         if (isCached) {
-            try {
-                const currentCache = cache.get(senderPSID);
-                switch (currentCache.split(':')[0]) {
-                    case 'search': {
-                        const searchKeyword = currentCache.split(':')[1];
-                        console.log(searchKeyword);
-                        request(APIs.WIKIPEDIA + searchKeyword, { json: true }, (err, res, body) => {
-                            if (err) { return console.log(err); }
+            const currentCache = cache.get(senderPSID);
+            switch (currentCache.split(':')[0]) {
+                case 'search': {
+                    const searchKeyword = currentCache.split(':')[1];
+                    console.log(searchKeyword);
+                    request(APIs.WIKIPEDIA + searchKeyword, { json: true }, (err, res, body) => {
+                        if (err) { return console.log(err); }
+                        try {
                             const { pages } = body.query;
                             const object = Object.keys(pages)[text - 1];
                             console.log(object);
@@ -110,21 +110,21 @@ app.post('/webhook', (req, res) => {
                                 sendMessage(senderPSID, contentBody[i]);
                             }
                             cache.del(senderPSID);
-                            // sendMessage(senderPSID, response);
-                        });
-                    }
-                    default:
-                        sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
+                            // sendMessage(senderPSID, response); 
+                        } catch (e) {
+                            console.log(e);
+                            console.log('catchcatchcatchcatch')
+                            sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
+                        }
 
+                    });
                 }
-                return;
-            } catch (e) {
-                console.log(e);
-                console.log('catchcatchcatchcatchcatchcatchcatch');
-                cache.del(senderPSID);
-                sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
+                default:
+                    sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
+
             }
-            
+            return;
+
         }
         switch (query[0].toLowerCase()) {
             case 'search':
