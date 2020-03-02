@@ -106,7 +106,7 @@ app.post('/webhook', (req, res) => {
                         // console.log(response);
                         for (let i = 0; i < contentBody.length; i++) {
                             console.log(contentBody[i])
-                            sendMessage(senderPSID, contentBody[i]);
+                            sendMessage(senderPSID, i.toString());
                         }
                         cache.del(senderPSID);
                         // sendMessage(senderPSID, response);
