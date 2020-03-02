@@ -92,7 +92,8 @@ app.post('/webhook', (req, res) => {
             const currentCache = cache.get(senderPSID);
             switch (query[0].toLowerCase()) {
                 case 'search': {
-                    request(APIs.WIKIPEDIA + currentCache[1], { json: true }, (err, res, body) => {
+                    const searchKeyword = currentCache.split(':')[1];
+                    request(APIs.WIKIPEDIA + searchKeyword, { json: true }, (err, res, body) => {
                         if (err) { return console.log(err); }
                         const { pages } = body.query;
                         const response = `
