@@ -100,7 +100,7 @@ app.post('/webhook', (req, res) => {
 						${pages[text].contents}
                         `;
                         cache.del(senderPSID);
-                        return sendMessage(senderPSID, response);
+                        sendMessage(senderPSID, response);
                     });
                 }
             }
@@ -126,7 +126,8 @@ app.post('/webhook', (req, res) => {
                         choiceNumber++;
                     }
                     cache.put(senderPSID, `search:${searchString}`);
-                    return sendMessage(senderPSID, choices);
+                    sendMessage(senderPSID, choices);
+                    return;
                 });
                 break;
             case "help":
