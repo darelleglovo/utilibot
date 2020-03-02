@@ -114,6 +114,7 @@ app.post('/webhook', (req, res) => {
                         } catch (e) {
                             console.log(e);
                             console.log('catchcatchcatchcatch')
+                            cache.del(senderPSID);
                             sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
                         }
 
