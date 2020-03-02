@@ -107,12 +107,12 @@ app.post('/webhook', (req, res) => {
                 });
                 break;
             case "help":
-                sendMessage(senderPSID,
+                const a = `
+                test
+                test
+                s
                 `
-                Searching:
-                > Type "search <space> <keyword to search>"
-                > Example: search gravity
-                `)
+                sendMessage(senderPSID, a)
                 break;
             default:
                 sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
