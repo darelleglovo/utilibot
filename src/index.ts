@@ -99,6 +99,7 @@ app.post('/webhook', (req, res) => {
                         const { pages } = body.query;
                         const object = Object.keys(pages)[text-1];
                         console.log(object);
+                        console.log(pages[object]);
                         const response = pages[object].title + '\n' + pages[object].extract
                         cache.del(senderPSID);
                         sendMessage(senderPSID, response);
