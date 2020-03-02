@@ -101,6 +101,7 @@ app.post('/webhook', (req, res) => {
                         console.log(object);
                         console.log(pages[object]);
                         const contentBody = pages[object].extract.split('\\n');
+                        console.log(contentBody);
                         // const response = pages[object].title + '\n' + pages[object].extract
                         // console.log(response);
                         for (let i = 0; i <= contentBody.length; i++) {
