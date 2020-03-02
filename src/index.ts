@@ -89,31 +89,40 @@ app.post('/webhook', (req, res) => {
         const query = text.split(" ")
         const isCached = cache.get(senderPSID);
         if (isCached) {
-            const currentCache = cache.get(senderPSID);
-            switch (currentCache.split(':')[0]) {
-                case 'search': {
-                    const searchKeyword = currentCache.split(':')[1];
-                    console.log(searchKeyword);
-                    request(APIs.WIKIPEDIA + searchKeyword, { json: true }, (err, res, body) => {
-                        if (err) { return console.log(err); }
-                        const { pages } = body.query;
-                        const object = Object.keys(pages)[text-1];
-                        console.log(object);
-                        console.log(pages[object]);
-                        const contentBody = pages[object].extract.split('\n');
-                        console.log(contentBody);
-                        // const response = pages[object].title + '\n' + pages[object].extract
-                        // console.log(response);
-                        for (let i = 0; i < contentBody.length; i++) {
-                            console.log(i, contentBody.length)
-                            sendMessage(senderPSID, contentBody[i]);
-                        }
-                        cache.del(senderPSID);
-                        // sendMessage(senderPSID, response);
-                    });
+            try {
+                const currentCache = cache.get(senderPSID);
+                switch (currentCache.split(':')[0]) {
+                    case 'search': {
+                        const searchKeyword = currentCache.split(':')[1];
+                        console.log(searchKeyword);
+                        request(APIs.WIKIPEDIA + searchKeyword, { json: true }, (err, res, body) => {
+                            if (err) { return console.log(err); }
+                            const { pages } = body.query;
+                            const object = Object.keys(pages)[text - 1];
+                            console.log(object);
+                            console.log(pages[object]);
+                            const contentBody = pages[object].extract.split('\n');
+                            console.log(contentBody);
+                            // const response = pages[object].title + '\n' + pages[object].extract
+                            // console.log(response);
+                            for (let i = 0; i < contentBody.length; i++) {
+                                console.log(i, contentBody.length)
+                                sendMessage(senderPSID, contentBody[i]);
+                            }
+                            cache.del(senderPSID);
+                            // sendMessage(senderPSID, response);
+                        });
+                    }
+                    default:
+                        sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
+
                 }
+                return;
+            } catch (e) {
+                console.log(e);
+                sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
             }
-            return;
+            
         }
         switch (query[0].toLowerCase()) {
             case 'search':
