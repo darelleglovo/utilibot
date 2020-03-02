@@ -104,7 +104,7 @@ app.post('/webhook', (req, res) => {
                         console.log(contentBody);
                         // const response = pages[object].title + '\n' + pages[object].extract
                         // console.log(response);
-                        for (let i = 0; i <= contentBody.length; i++) {
+                        for (let i = 0; i < contentBody.length; i++) {
                             console.log(contentBody[i])
                             sendMessage(senderPSID, contentBody[i]);
                         }
