@@ -99,7 +99,7 @@ app.post('/webhook', (req, res) => {
                         const { pages } = body.query;
                         console.log(body.query.pages[searchResult])
                         sendMessage(senderPSID,
-                        `
+                        dedent`
                         ${pages[searchResult].title}
 
                         ${pages[searchResult].extract}
