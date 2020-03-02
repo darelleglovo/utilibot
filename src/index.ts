@@ -106,7 +106,7 @@ app.post('/webhook', (req, res) => {
                     //     ${pages[searchResult].extract}
                     //     `)
                     // }
-                    let choices = dedent`Choose a number:`;
+                    let choices = dedent`Choose a number: \n`;
                     let choiceNumber = 1;
                     for (const searchResult in body.query.pages) {
                         const { pages } = body.query;
@@ -120,7 +120,8 @@ app.post('/webhook', (req, res) => {
                 const a = dedent`
 				Searching:
 				> Type "search <space> <keyword to search>"
-				> Example: search gravity
+                > Example: search gravity
+                '<a>test</a>'
                 `
                 sendMessage(senderPSID, a)
                 break;
