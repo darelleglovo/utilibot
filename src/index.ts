@@ -120,8 +120,7 @@ app.post('/webhook', (req, res) => {
                 const a = dedent`
 				Searching:
 				> Type "search <space> <keyword to search>"
-                > Example: search gravity
-                
+                > Example: search gravity \
                 Test:
                 > asd
                 `
