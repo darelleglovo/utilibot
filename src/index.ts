@@ -87,25 +87,37 @@ app.post('/webhook', (req, res) => {
 
         const text = receivedMessage.text
         const query = text.split(" ")
+        const isCached = cache.get(senderPSID);
+        if (isCached) {
+            const currentCache = cache.get(senderPSID);
+            switch (query[0].toLowerCase()) {
+                case 'search': {
+                    request(APIs.WIKIPEDIA + currentCache[1], { json: true }, (err, res, body) => {
+                        if (err) { return console.log(err); }
+                        const { pages } = body.query;
+                        const response = `
+						${pages[text].title}
+						${pages[text].contents}
+                        `;
+                        cache.del(senderPSID);
+                        return sendMessage(senderPSID, response);
+                    });
+                }
+            }
+            return;
+        }
         switch (query[0].toLowerCase()) {
             case 'search':
-                const searchKeyword = text.split(' ').slice(1).join(' ') // remove 1st word
+                const searchKeyword = text.shift();
+                // const choice = text.pop();
+                const searchString = text.join(' ');
+
                 if (searchKeyword == "") {
                     sendMessage(senderPSID, "Search what?..")
                     return;
                 }
-                request(APIs.WIKIPEDIA + searchKeyword, { json: true }, (err, res, body) => {
+                request(APIs.WIKIPEDIA + searchString, { json: true }, (err, res, body) => {
                     if (err) { return console.log(err); }
-                    // for (const searchResult in body.query.pages) {
-                    //     const { pages } = body.query;
-                    //     console.log(body.query.pages[searchResult])
-                    //     sendMessage(senderPSID,
-                    //     dedent`
-                    //     ${pages[searchResult].title}
-
-                    //     ${pages[searchResult].extract}
-                    //     `)
-                    // }
                     let choices = dedent`Choose a number:` + '\n';
                     let choiceNumber = 1;
                     for (const searchResult in body.query.pages) {
@@ -113,8 +125,10 @@ app.post('/webhook', (req, res) => {
                         choices += `${choiceNumber}. ${pages[searchResult].title} \n`
                         choiceNumber++;
                     }
-                    sendMessage(senderPSID, choices);
+                    cache.put(senderPSID, `search:${searchString}`);
+                    return sendMessage(senderPSID, choices);
                 });
+                cache.del(senderPSID);
                 break;
             case "help":
                 const a = dedent`
