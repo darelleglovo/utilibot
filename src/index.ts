@@ -106,7 +106,7 @@ app.post('/webhook', (req, res) => {
                     //     ${pages[searchResult].extract}
                     //     `)
                     // }
-                    let choices = dedent`Choose a number: \n`;
+                    let choices = dedent`Choose a number:` + '\n';
                     let choiceNumber = 1;
                     for (const searchResult in body.query.pages) {
                         const { pages } = body.query;
