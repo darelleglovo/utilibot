@@ -128,7 +128,6 @@ app.post('/webhook', (req, res) => {
                     cache.put(senderPSID, `search:${searchString}`);
                     return sendMessage(senderPSID, choices);
                 });
-                cache.del(senderPSID);
                 break;
             case "help":
                 const a = dedent`
@@ -144,6 +143,7 @@ app.post('/webhook', (req, res) => {
             default:
                 sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
         }
+        cache.del(senderPSID);
     }
     const handlePostback = (senderPSID: string, receivedPostback: any) => {
 
