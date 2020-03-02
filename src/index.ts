@@ -1,6 +1,7 @@
 import express from "express";
 import * as bodyParser from "body-parser";
 import request from 'request';
+import { APIs } from './variables';
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -89,6 +90,22 @@ app.post('/webhook', (req, res) => {
         const text = receivedMessage.text
         const query = text.split(" ")
         switch (query[0].toLowerCase()) {
+            case 'search':
+                const searchKeyword = text.split(' ').slice(1).join(' ') // remove 1st word
+                if (searchKeyword == "") {
+                    sendMessage(senderPSID, "Search what?..")
+                    return;
+                }
+                request(APIs.WIKIPEDIA + searchKeyword, { json: true }, (err, res, body) => {
+                    if (err) { return console.log(err); }
+                    for (const searchResult in body.query.pages) {
+                        const { pages } = body.query;
+                        console.log(body.query.pages[searchResult])
+                        sendMessage(senderPSID, pages[searchResult].title + "\n \n" + pages[searchResult].extract)
+                    }
+
+                });
+                break;
             case "help":
                 sendMessage(senderPSID,
                     `
