@@ -121,7 +121,8 @@ app.post('/webhook', (req, res) => {
 				Searching:
 				> Type "search <space> <keyword to search>"
                 > Example: search gravity
-                '<a>test</a>'
+                Test:
+                > asd
                 `
                 sendMessage(senderPSID, a)
                 break;
