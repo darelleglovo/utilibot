@@ -92,9 +92,9 @@ app.post('/webhook', (req, res) => {
             case "help":
                 sendMessage(
                     senderPSID,
-                    `Test Help
-                    Test Multiline
-                    Test`)
+                    `asdasd
+                    sdsdsd
+                    asdasdadsa`)
                 break;
             default:
                 sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
