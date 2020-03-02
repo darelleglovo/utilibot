@@ -99,8 +99,8 @@ app.post('/webhook', (req, res) => {
                         const { pages } = body.query;
                         console.log(pages);
                         const response = `
-						${pages[text].title}
-						${pages[text].contents}
+						${pages.key(text).title}
+						${pages.key(text).contents}
                         `;
                         cache.del(senderPSID);
                         sendMessage(senderPSID, response);
