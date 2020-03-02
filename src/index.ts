@@ -106,10 +106,12 @@ app.post('/webhook', (req, res) => {
                     //     ${pages[searchResult].extract}
                     //     `)
                     // }
-                    let choices = dedent``;
+                    let choices = dedent`Choose a number:`;
+                    let choiceNumber = 1;
                     for (const searchResult in body.query.pages) {
                         const { pages } = body.query;
-                        choices += pages[searchResult].title + '\n'
+                        choices += `${choiceNumber}. ${pages[searchResult].title} \n`
+                        choiceNumber++;
                     }
                     sendMessage(senderPSID, choices);
                 });
