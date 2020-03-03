@@ -172,12 +172,14 @@ app.post('/webhook', (req, res) => {
                             baseCurrencyValue = body.rates[baseCurrency];
                             counterCurrencyValue = body.rates[counterCurrency];
                             let result: number = value * counterCurrencyValue;
-                            sendMessage(senderPSID, `${value} ${baseCurrency} is equal to ${result} ${counterCurrency}`)
+                            sendMessage(senderPSID, `${value} ${baseCurrency} is equal to ${result} ${counterCurrency}`);
                         });
                     } catch (e) {
                         console.log(e);
-                        sendMessage(senderPSID, MESSAGES.ERROR)
+                        sendMessage(senderPSID, MESSAGES.ERROR);
                     }
+                } else {
+                    sendMessage(senderPSID, MESSAGES.ERROR);
                 }
                 break;
             case 'help':
