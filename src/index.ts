@@ -169,7 +169,8 @@ app.post('/webhook', (req, res) => {
                     request(APIs.CURRENCY_EXCHANGE + `?symbols=${baseCurrency},${counterCurrency}&base=${baseCurrency}`, { json: true }, (err, res, body) => {
                         baseCurrencyValue = body.rates[baseCurrency];
                         counterCurrencyValue = body.rates[counterCurrency];
-                        console.log(baseCurrencyValue, counterCurrencyValue);
+                        let result: number = value * baseCurrencyValue;
+                        sendMessage(senderPSID, `${value} ${baseCurrency} is equal to ${result} ${counterCurrency}`)
                     });
 
                 }
