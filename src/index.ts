@@ -122,6 +122,7 @@ app.post('/webhook', (req, res) => {
                 }
                 default:
                     sendMessage(senderPSID, "2I do not understand what you're saying. Please type \"help\" for the list of commands.")
+                    break;
 
             }
             return;
