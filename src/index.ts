@@ -237,6 +237,11 @@ app.post('/webhook', (req, res) => {
                         sendMessage(senderPSID, 'No such entry found.');
                     });
                 break;
+            case 'news':
+                request(APIs.UTILIBOT_UTILS + `news`, { json: true }, (err, res, body) => {
+                    console.log(body);
+                });
+                break;
             case 'help':
                 const a = dedent`
 				Searching:
