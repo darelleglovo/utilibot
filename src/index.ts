@@ -177,6 +177,7 @@ app.post('/webhook', (req, res) => {
                                     cache.del(senderPSID);
                                     return;
                                 }
+                                cache.del(senderPSID);
                                 sendMessage(senderPSID, response);
                             } catch (e) {
                                 cache.del(senderPSID);
