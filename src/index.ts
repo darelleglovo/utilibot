@@ -70,10 +70,12 @@ app.post('/webhook', (req, res) => {
                         "text": message
                     }
                 }
-            }, (error) => {
+            }, (error, response) => {
                 if (error) {
                     console.error(error)
                     return
+                } else {
+                    resolve(response);
                 }
             })
         })
@@ -120,9 +122,9 @@ app.post('/webhook', (req, res) => {
                             console.log(firstName)
                             for (let i = 0; i < contentBody.length; i++) {
                                 console.log(i, contentBody.length)
-                                sendMessage(senderPSID, contentBody[i]);
+                                await sendMessage(senderPSID, contentBody[i]);
                             }
-                            sendMessage(senderPSID, `Here's what I've found :)`)
+                            await sendMessage(senderPSID, `Here's what I've found :)`)
                             cache.del(senderPSID);
                             // sendMessage(senderPSID, response); 
                         } catch (e) {
