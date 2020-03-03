@@ -155,7 +155,20 @@ app.post('/webhook', (req, res) => {
                     return;
                 });
                 break;
-            case "help":
+            case 'currexrate':
+                // currexrate 1 php to usd
+                if (query.length === 5) {
+                    const value = query[1];
+                    const baseCurrency = query[2].toUpperCase();
+                    const counterCurrency = query[4].toUpperCase();
+
+                    request(APIs.CURRENCY_EXCHANGE + `?symbols=${baseCurrency},${counterCurrency}&base=${baseCurrency}`, { json: true }, (err, res, body) => {
+                        console.log(body);
+                    });
+
+                }
+                break;
+            case 'help':
                 const a = dedent`
 				Searching:
 				> Type "search <space> <keyword to search>"
