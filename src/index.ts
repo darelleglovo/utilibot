@@ -156,7 +156,6 @@ app.post('/webhook', (req, res) => {
                 });
                 break;
             case 'currexrate':
-                // currexrate 1 php to usd
                 let value: number;
                 let baseCurrency: string;
                 let counterCurrency: string;
@@ -184,6 +183,16 @@ app.post('/webhook', (req, res) => {
                     sendMessage(senderPSID, MESSAGES.ERROR);
                 }
                 break;
+            case 'weather':
+                const city = query[1];
+                const country = query[2];
+                request(APIs.OPENWEATHER + `?q=${city},${country}&units=metric&appid=${process.env.OPENWEATHER_TOKEN}`, { json: true }, (err, res, body) => {
+                    const response = dedent`
+                    ${body.name} weather as of now:
+                    ${body.main.temp}C
+                    `;
+                    sendMessage(senderPSID, response);
+                });
             case 'help':
                 const a = dedent`
 				Searching:
