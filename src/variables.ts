@@ -4,5 +4,5 @@ export enum APIs {
 }
 
 export enum MESSAGES {
-    ERROR = 'I do not understand what you're saying. Please type \"help\" for the list of commands.'
+    ERROR = `I do not understand what you're saying. Please type \"help\" for the list of commands.`
 }
