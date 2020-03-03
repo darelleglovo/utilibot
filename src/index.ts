@@ -105,6 +105,7 @@ app.post('/webhook', (req, res) => {
                             console.log(contentBody);
                             // const response = pages[object].title + '\n' + pages[object].extract
                             // console.log(response);
+                            sendMessage(senderPSID, 'Here\'s what I\'ve found :)')
                             for (let i = 0; i < contentBody.length; i++) {
                                 console.log(i, contentBody.length)
                                 sendMessage(senderPSID, contentBody[i]);
@@ -141,7 +142,7 @@ app.post('/webhook', (req, res) => {
                 }
                 request(APIs.WIKIPEDIA + searchString, { json: true }, (err, res, body) => {
                     if (err) { return console.log(err); }
-                    let choices = dedent`Choose a number:` + '\n';
+                    let choices = dedent`Select a number from the search results:` + '\n';
                     let choiceNumber = 1;
                     for (const searchResult in body.query.pages) {
                         const { pages } = body.query;
