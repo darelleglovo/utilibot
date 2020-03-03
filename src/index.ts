@@ -193,7 +193,7 @@ app.post('/webhook', (req, res) => {
         switch (query[0].toLowerCase()) {
             case 'search':
                 const searchKeyword = query.shift();
-                // const choice = query.pop();
+                // const choice = query.pop(); 
                 const searchString = query.join(' ');
 
                 if (searchKeyword == "") {
