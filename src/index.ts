@@ -1,7 +1,7 @@
 import express from 'express';
 import * as bodyParser from 'body-parser';
 import request from 'request';
-import { APIs } from './variables';
+import { APIs, MESSAGES } from './variables';
 import dedent from 'dedent-js';
 import cache from 'memory-cache';
 
@@ -124,7 +124,7 @@ app.post('/webhook', (req, res) => {
                     break;
                 }
                 default:
-                    sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
+                    sendMessage(senderPSID, MESSAGES.ERROR)
                     break;
 
             }
@@ -163,16 +163,21 @@ app.post('/webhook', (req, res) => {
                 let baseCurrencyValue: number;
                 let counterCurrencyValue: number;
                 if (query.length === 5) {
-                    value = query[1];
-                    baseCurrency = query[2].toUpperCase();
-                    counterCurrency = query[4].toUpperCase();
-                    request(APIs.CURRENCY_EXCHANGE + `?symbols=${baseCurrency},${counterCurrency}&base=${baseCurrency}`, { json: true }, (err, res, body) => {
-                        baseCurrencyValue = body.rates[baseCurrency];
-                        counterCurrencyValue = body.rates[counterCurrency];
-                        let result: number = value * counterCurrencyValue;
-                        sendMessage(senderPSID, `${value} ${baseCurrency} is equal to ${result} ${counterCurrency}`)
-                    });
-
+                    try {
+                        value = query[1];
+                        baseCurrency = query[2].toUpperCase();
+                        counterCurrency = query[4].toUpperCase();
+                        request(APIs.CURRENCY_EXCHANGE + `?symbols=${baseCurrency},${counterCurrency}&base=${baseCurrency}`, { json: true }, (err, res, body) => {
+                            if (err) { return console.log(err); }
+                            baseCurrencyValue = body.rates[baseCurrency];
+                            counterCurrencyValue = body.rates[counterCurrency];
+                            let result: number = value * counterCurrencyValue;
+                            sendMessage(senderPSID, `${value} ${baseCurrency} is equal to ${result} ${counterCurrency}`)
+                        });
+                    } catch (e) {
+                        console.log(e);
+                        sendMessage(senderPSID, MESSAGES.ERROR)
+                    }
                 }
                 break;
             case 'help':
@@ -187,7 +192,7 @@ app.post('/webhook', (req, res) => {
                 sendMessage(senderPSID, a);
                 break;
             default:
-                sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
+                sendMessage(senderPSID, MESSAGES.ERROR)
         }
         cache.del(senderPSID);
     }
