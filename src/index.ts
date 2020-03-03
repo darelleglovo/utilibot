@@ -114,7 +114,7 @@ app.post('/webhook', (req, res) => {
                         } catch (e) {
                             console.log(e);
                             cache.del(senderPSID);
-                            sendMessage(senderPSID, "1I do not understand what you're saying. Please type \"help\" for the list of commands.")
+                            sendMessage(senderPSID, "Invalid choice, please try again.")
                             return;
                         }
 
@@ -122,7 +122,7 @@ app.post('/webhook', (req, res) => {
                     break;
                 }
                 default:
-                    sendMessage(senderPSID, "2I do not understand what you're saying. Please type \"help\" for the list of commands.")
+                    sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
                     break;
 
             }
