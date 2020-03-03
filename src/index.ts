@@ -60,7 +60,7 @@ app.get('/webhook', (req, res) => {
 app.post('/webhook', (req, res) => {
 
     const sendMessage = async (senderPSID: string, message: string) => {
-        await request.post(`https://graph.facebook.com/v6.0/me/messages?access_token=${GRAPH_TOKEN}`, {
+        const req = await request.post(`https://graph.facebook.com/v6.0/me/messages?access_token=${GRAPH_TOKEN}`, {
             json: {
                 "recipient": {
                     "id": senderPSID
@@ -75,7 +75,7 @@ app.post('/webhook', (req, res) => {
                 return
             }
         })
-        return;
+        return req;
     }
 
     // Handles messages events
