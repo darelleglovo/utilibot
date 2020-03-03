@@ -208,7 +208,7 @@ app.post('/webhook', (req, res) => {
                 break;
             case 'define':
                 // @ts-ignore
-                dict.find("happy", function (error, data) { if (error) return console.log(error); console.log(data); });
+                dict.find("ace", function (error, data) { if (error) return console.log(error); console.log(data); });
                 break;
             case 'help':
                 const a = dedent`
