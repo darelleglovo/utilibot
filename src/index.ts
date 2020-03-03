@@ -120,9 +120,9 @@ app.post('/webhook', (req, res) => {
                             console.log(firstName)
                             for (let i = 0; i < contentBody.length; i++) {
                                 console.log(i, contentBody.length)
-                                await sendMessage(senderPSID, contentBody[i]);
+                                sendMessage(senderPSID, contentBody[i]);
                             }
-                            await sendMessage(senderPSID, `Here's what I've found :)`)
+                            sendMessage(senderPSID, `Here's what I've found :)`)
                             cache.del(senderPSID);
                             // sendMessage(senderPSID, response); 
                         } catch (e) {
