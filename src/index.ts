@@ -143,12 +143,17 @@ app.post('/webhook', (req, res) => {
                     let newsp: string;
                     sendMessage(senderPSID, 'Please wait..')
                     request(APIs.UTILIBOT_UTILS + `news`, { json: true }, (err, res, body) => {
-                        console.log(body.message);
-                        console.log('choice', text);
-                        console.log(body.message[text - 1]);
-                        title = body.message[text - 1][1];
-                        link = body.message[text - 1][0];
-                        newsp = body.message[text - 1][2];
+                        try {
+                            console.log(body.message);
+                            console.log('choice', text);
+                            console.log(body.message[text - 1]);
+                            title = body.message[text - 1][1];
+                            link = body.message[text - 1][0];
+                            newsp = body.message[text - 1][2];
+                        } catch (e) {
+                            cache.del(senderPSID);
+                            sendMessage(senderPSID, 'There might be something wrong or you picked a wrong option? :/');
+                        }
                         request(APIs.UTILIBOT_UTILS + `main_news_crawl?link=${link}&title=${title}&newsp=${newsp}`, { json: true }, async (err, res, body) => {
                             try {
                                 console.log(body);
