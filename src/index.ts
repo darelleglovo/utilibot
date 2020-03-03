@@ -139,7 +139,7 @@ app.post('/webhook', (req, res) => {
                     sendMessage(senderPSID, 'Please wait..')
                     request(APIs.UTILIBOT_UTILS + `news`, { json: true }, (err, res, body) => {
                         console.log(body.message);
-                        console.log('choice' ,text);
+                        console.log('choice', text);
                         console.log(body.message[text - 1]);
                         title = body.message[text - 1][1];
                         link = body.message[text - 1][0];
@@ -151,6 +151,29 @@ app.post('/webhook', (req, res) => {
 
                             ${body.body}
                             `;
+                            if (response.length > 2000) {
+
+                                let middle = Math.floor(response.length / 2);
+                                let before = response.lastIndexOf(' ', middle);
+                                let after = response.indexOf(' ', middle + 1);
+
+                                if (middle - before < after - middle) {
+                                    middle = before;
+                                } else {
+                                    middle = after;
+                                }
+
+                                let s1 = response.substr(0, middle);
+                                let s2 = response.substr(middle + 1);
+
+                                // console.log(s1)
+                                // console.log(' ')
+                                // console.log(s2)
+                                sendMessage(senderPSID, s1);
+                                sendMessage(senderPSID, s2);
+                                cache.del(senderPSID);
+                                return;
+                            }
                             sendMessage(senderPSID, response);
                         });
                         cache.del(senderPSID);
@@ -270,7 +293,7 @@ app.post('/webhook', (req, res) => {
                     `;
                     for (let i = 0; i < body.message.length; i++) {
                         response += dedent`
-                        ${i+1}. ${body.message[i][2]}
+                        ${i + 1}. ${body.message[i][2]}
                         - ${body.message[i][1]}
 
 
