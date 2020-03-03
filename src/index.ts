@@ -4,6 +4,7 @@ import request from 'request';
 import { APIs, MESSAGES } from './variables';
 import dedent from 'dedent-js';
 import cache from 'memory-cache';
+import { capitalize } from 'lodash';
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -192,8 +193,11 @@ app.post('/webhook', (req, res) => {
                         sendMessage(senderPSID, 'City not found');
                     } else if (body.cod == 200) {
                         const response = dedent`
-                        ${body.name} weather as of now:
+                        ${body.name}, ${body.sys.country} weather as of now:
+                        ${capitalize(body.weather.description)}
                         ${body.main.temp}C
+
+                        By OpenWeather
                         `;
                         sendMessage(senderPSID, response);
                     }
