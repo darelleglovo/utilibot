@@ -205,16 +205,20 @@ app.post('/webhook', (req, res) => {
                 }
                 request(APIs.WIKIPEDIA + searchString, { json: true }, (err, res, body) => {
                     if (err) { return console.log(err); }
-                    let choices = dedent`Select a number from the search results:` + '\n';
-                    let choiceNumber = 1;
-                    for (const searchResult in body.query.pages) {
-                        const { pages } = body.query;
-                        choices += `${choiceNumber}. ${pages[searchResult].title} \n`
-                        choiceNumber++;
+                    try {
+                        let choices = dedent`Select a number from the search results:` + '\n';
+                        let choiceNumber = 1;
+                        for (const searchResult in body.query.pages) {
+                            const { pages } = body.query;
+                            choices += `${choiceNumber}. ${pages[searchResult].title} \n`
+                            choiceNumber++;
+                        }
+                        cache.put(senderPSID, `search:${searchString}`);
+                        sendMessage(senderPSID, choices);
+                        return;
+                    } catch (e) {
+                        sendMessage(senderPSID, MESSAGES.ERROR);
                     }
-                    cache.put(senderPSID, `search:${searchString}`);
-                    sendMessage(senderPSID, choices);
-                    return;
                 });
                 break;
             case 'currexrate':
