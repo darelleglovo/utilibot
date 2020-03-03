@@ -193,6 +193,7 @@ app.post('/webhook', (req, res) => {
                     `;
                     sendMessage(senderPSID, response);
                 });
+                break;
             case 'help':
                 const a = dedent`
 				Searching:
