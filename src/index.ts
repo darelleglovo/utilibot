@@ -217,8 +217,11 @@ app.post('/webhook', (req, res) => {
                 lookup.then(function (res: any) {
                     console.log(JSON.stringify(res, null, 4));
                     const response = dedent`
-                    ${res.id}
-                    ${res.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]}
+                    ${capitalize(res.id)}
+
+                    ${capitalize(res.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0])}
+
+                    Example: ${capitalize(res.results[0].lexicalEntries[0].entries[0].senses[0].examples[0])}
                     `;
                     sendMessage(senderPSID, response);
                 },
