@@ -139,6 +139,7 @@ app.post('/webhook', (req, res) => {
                     request(APIs.UTILIBOT_UTILS + `news`, { json: true }, (err, res, body) => {
                         console.log(body.message);
                         console.log('choice' ,text);
+                        console.log(body.message[text - 1]);
                         // title = body.message[text + 1][1];
                         // link = body.message[text + 1][0];
                         // newsp = body.message[text + 1][2];
