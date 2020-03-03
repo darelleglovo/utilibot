@@ -150,39 +150,45 @@ app.post('/webhook', (req, res) => {
                         link = body.message[text - 1][0];
                         newsp = body.message[text - 1][2];
                         request(APIs.UTILIBOT_UTILS + `main_news_crawl?link=${link}&title=${title}&newsp=${newsp}`, { json: true }, async (err, res, body) => {
-                            console.log(body);
-                            let response = dedent`
-                            ${body.title}
-
-                            ${body.body}
-                            `;
-                            if (response.length > 2000) {
-
-                                let middle = Math.floor(response.length / 2);
-                                let before = response.lastIndexOf(' ', middle);
-                                let after = response.indexOf(' ', middle + 1);
-
-                                if (middle - before < after - middle) {
-                                    middle = before;
-                                } else {
-                                    middle = after;
+                            try {
+                                console.log(body);
+                                let response = dedent`
+                                ${body.title}
+    
+                                ${body.body}
+                                `;
+                                if (response.length > 2000) {
+    
+                                    let middle = Math.floor(response.length / 2);
+                                    let before = response.lastIndexOf(' ', middle);
+                                    let after = response.indexOf(' ', middle + 1);
+    
+                                    if (middle - before < after - middle) {
+                                        middle = before;
+                                    } else {
+                                        middle = after;
+                                    }
+    
+                                    let s1 = response.substr(0, middle);
+                                    let s2 = response.substr(middle + 1);
+    
+                                    await sendMessage(senderPSID, s1);
+                                    await sendMessage(senderPSID, s2);
+                                    cache.del(senderPSID);
+                                    return;
                                 }
-
-                                let s1 = response.substr(0, middle);
-                                let s2 = response.substr(middle + 1);
-
-                                await sendMessage(senderPSID, s1);
-                                await sendMessage(senderPSID, s2);
+                                sendMessage(senderPSID, response);
+                            } catch (e) {
                                 cache.del(senderPSID);
-                                return;
+                                sendMessage(senderPSID, MESSAGES.ERROR);
                             }
-                            sendMessage(senderPSID, response);
                         });
                         cache.del(senderPSID);
                     });
                     break;
                 }
                 default:
+                    cache.del(senderPSID);
                     sendMessage(senderPSID, MESSAGES.ERROR)
                     break;
 
@@ -193,7 +199,7 @@ app.post('/webhook', (req, res) => {
         switch (query[0].toLowerCase()) {
             case 'search':
                 const searchKeyword = query.shift();
-                // const choice = query.pop(); 
+                // const choice = query.pop();
                 const searchString = query.join(' ');
 
                 if (searchKeyword == "") {
@@ -313,17 +319,17 @@ app.post('/webhook', (req, res) => {
                 const a = dedent`
 				Searching:
 				> Type "search <keyword to search>"
-                > Example: search gravity
+				> Example: search gravity
 				Currency exchange:
 				> Type "currexrate <base value> <base currency> to <counter currency>"
-                > Example: currexrate 5 usd to php
+				> Example: currexrate 5 usd to php
 				Weather:
 				> Type "weather <city> <country>"
-                > Example: weather taguig ph
+				> Example: weather taguig ph
 				Dictionary:
 				> Type "define <word>"
-                > Example: define happy
-                News:
+				> Example: define happy
+				News:
 				> Type "news"
                 `;
                 sendMessage(senderPSID, a);
