@@ -104,7 +104,7 @@ app.post('/webhook', (req, res) => {
                 case 'search': {
                     const searchKeyword = currentCache.split(':')[1];
                     console.log(searchKeyword);
-                    request(APIs.WIKIPEDIA + searchKeyword, { json: true }, (err, res, body) => {
+                    request(APIs.WIKIPEDIA + searchKeyword, { json: true }, async (err, res, body) => {
                         if (err) { return console.log(err); }
                         try {
                             const { pages } = body.query;
@@ -116,11 +116,11 @@ app.post('/webhook', (req, res) => {
                             // const response = pages[object].title + '\n' + pages[object].extract
                             // console.log(response);
                             console.log(firstName)
-                            sendMessage(senderPSID, `Here's what I've found :)`)
                             for (let i = 0; i < contentBody.length; i++) {
                                 console.log(i, contentBody.length)
-                                sendMessage(senderPSID, contentBody[i]);
+                                await sendMessage(senderPSID, contentBody[i]);
                             }
+                            await sendMessage(senderPSID, `Here's what I've found :)`)
                             cache.del(senderPSID);
                             // sendMessage(senderPSID, response); 
                         } catch (e) {
