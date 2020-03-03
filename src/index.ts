@@ -216,6 +216,10 @@ app.post('/webhook', (req, res) => {
 
                 lookup.then(function (res: any) {
                     console.log(JSON.stringify(res, null, 4));
+                    if (res === 'No such entry found.') {
+                        sendMessage(senderPSID, 'No such entry found.');
+                        return;
+                    }
                     const response = dedent`
                     ${res.id}
                     ${res.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]}
