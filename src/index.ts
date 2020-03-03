@@ -6,7 +6,7 @@ import dedent from 'dedent-js';
 import cache from 'memory-cache';
 import { capitalize } from 'lodash';
 
-var Dictionary = require("oxford-dictionary-api");
+var Dictionary = require("oxford-dictionary");
 var dict = new Dictionary('77714543', 'd75c95e6592142ac7f6f31b0870ee765');
 
 const app = express();
