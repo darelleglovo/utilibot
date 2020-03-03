@@ -113,16 +113,15 @@ app.post('/webhook', (req, res) => {
                             // sendMessage(senderPSID, response); 
                         } catch (e) {
                             console.log(e);
-                            console.log('catchcatchcatchcatch')
                             cache.del(senderPSID);
-                            sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
+                            sendMessage(senderPSID, "1I do not understand what you're saying. Please type \"help\" for the list of commands.")
                             return;
                         }
 
                     });
                 }
                 default:
-                    sendMessage(senderPSID, "I do not understand what you're saying. Please type \"help\" for the list of commands.")
+                    sendMessage(senderPSID, "2I do not understand what you're saying. Please type \"help\" for the list of commands.")
 
             }
             return;
