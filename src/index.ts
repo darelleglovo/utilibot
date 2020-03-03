@@ -171,9 +171,6 @@ app.post('/webhook', (req, res) => {
                                 let s1 = response.substr(0, middle);
                                 let s2 = response.substr(middle + 1);
 
-                                // console.log(s1)
-                                // console.log(' ')
-                                // console.log(s2)
                                 await sendMessage(senderPSID, s1);
                                 await sendMessage(senderPSID, s2);
                                 cache.del(senderPSID);
@@ -317,19 +314,15 @@ app.post('/webhook', (req, res) => {
 				Searching:
 				> Type "search <keyword to search>"
                 > Example: search gravity
-				
 				Currency exchange:
 				> Type "currexrate <base value> <base currency> to <counter currency>"
                 > Example: currexrate 5 usd to php
-				
 				Weather:
 				> Type "weather <city> <country>"
                 > Example: weather taguig ph
-				
 				Dictionary:
 				> Type "define <word>"
                 > Example: define happy
-				
                 News:
 				> Type "news"
                 `;
