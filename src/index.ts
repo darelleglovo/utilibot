@@ -60,7 +60,7 @@ app.get('/webhook', (req, res) => {
 app.post('/webhook', (req, res) => {
 
     const sendMessage = (senderPSID: string, message: string) => {
-        request.post(`https://graph.facebook.com/v6.0/me/messages?access_token=${GRAPH_TOKEN}`, {
+        return request.post(`https://graph.facebook.com/v6.0/me/messages?access_token=${GRAPH_TOKEN}`, {
             json: {
                 "recipient": {
                     "id": senderPSID
@@ -144,7 +144,7 @@ app.post('/webhook', (req, res) => {
                         title = body.message[text - 1][1];
                         link = body.message[text - 1][0];
                         newsp = body.message[text - 1][2];
-                        request(APIs.UTILIBOT_UTILS + `main_news_crawl?link=${link}&title=${title}&newsp=${newsp}`, { json: true }, (err, res, body) => {
+                        request(APIs.UTILIBOT_UTILS + `main_news_crawl?link=${link}&title=${title}&newsp=${newsp}`, { json: true }, async (err, res, body) => {
                             console.log(body);
                             let response = dedent`
                             ${body.title}
@@ -169,8 +169,8 @@ app.post('/webhook', (req, res) => {
                                 // console.log(s1)
                                 // console.log(' ')
                                 // console.log(s2)
-                                sendMessage(senderPSID, s1);
-                                sendMessage(senderPSID, s2);
+                                await sendMessage(senderPSID, s1);
+                                await sendMessage(senderPSID, s2);
                                 cache.del(senderPSID);
                                 return;
                             }
