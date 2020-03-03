@@ -187,6 +187,7 @@ app.post('/webhook', (req, res) => {
                 const city = query[1];
                 const country = query[2];
                 request(APIs.OPENWEATHER + `?q=${city},${country}&units=metric&appid=${process.env.OPENWEATHER_TOKEN}`, { json: true }, (err, res, body) => {
+                    console.log(body.cod);
                     if (body.cod === 404) {
                         sendMessage(senderPSID, 'City not found');
                     } else if (body.cod === 200) {
