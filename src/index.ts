@@ -7,7 +7,12 @@ import cache from 'memory-cache';
 import { capitalize } from 'lodash';
 
 var Dictionary = require("oxford-dictionary");
-var dict = new Dictionary('77714543', 'd75c95e6592142ac7f6f31b0870ee765');
+var config = {
+    app_id: "77714543",
+    app_key: "d75c95e6592142ac7f6f31b0870ee765",
+    source_lang: "en-us"
+};
+var dict = new Dictionary(config);
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
