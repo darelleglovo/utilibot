@@ -6,6 +6,9 @@ import dedent from 'dedent-js';
 import cache from 'memory-cache';
 import { capitalize } from 'lodash';
 
+var Dictionary = require("oxford-dictionary-api");
+var dict = new Dictionary('77714543', 'd75c95e6592142ac7f6f31b0870ee765');
+
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -202,6 +205,10 @@ app.post('/webhook', (req, res) => {
                         sendMessage(senderPSID, response);
                     }
                 });
+                break;
+            case 'define':
+                // @ts-ignore
+                dict.find("happy", function (error, data) { if (error) return console.log(error); console.log(data); });
                 break;
             case 'help':
                 const a = dedent`
