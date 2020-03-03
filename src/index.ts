@@ -171,8 +171,9 @@ app.post('/webhook', (req, res) => {
                             if (err) { return console.log(err); }
                             baseCurrencyValue = body.rates[baseCurrency];
                             counterCurrencyValue = body.rates[counterCurrency];
+                            const date = body.date;
                             let result: number = value * counterCurrencyValue;
-                            sendMessage(senderPSID, `${value} ${baseCurrency} is equal to ${result} ${counterCurrency}`);
+                            sendMessage(senderPSID, `As of ${date}, ${value} ${baseCurrency} is equal to ${result} ${counterCurrency}`);
                         });
                     } catch (e) {
                         console.log(e);
