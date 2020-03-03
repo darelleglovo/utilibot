@@ -240,6 +240,14 @@ app.post('/webhook', (req, res) => {
             case 'news':
                 request(APIs.UTILIBOT_UTILS + `news`, { json: true }, (err, res, body) => {
                     console.log(body);
+                    let response = dedent``;
+                    for (let i = 0; i < body.message.length; i++) {
+                        response += dedent`
+                        ${body.message[i][2]}
+                        ${body.message[i][1]}
+                        `;
+                    }
+                    sendMessage(senderPSID, response)
                 });
                 break;
             case 'help':
