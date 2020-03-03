@@ -183,11 +183,11 @@ app.post('/webhook', (req, res) => {
             case 'help':
                 const a = dedent`
 				Searching:
-				> Type "search <space> <keyword to search>"
+				> Type "search <keyword to search>"
 				> Example: search gravity
-				Searching2 test:
-				> Type "search <space> <keyword to search>"
-				> Example: search gravity
+				Currency exchange:
+				> Type "currexrate <base value> <base currency> to <counter currency>"
+				> Example: currexrate 5 usd to php
                 `;
                 sendMessage(senderPSID, a);
                 break;
