@@ -221,7 +221,7 @@ app.post('/webhook', (req, res) => {
 
                     ${capitalize(res.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0])}
 
-                    Example: ${capitalize(res.results[0].lexicalEntries[0].entries[0].senses[0].examples[0])}
+                    Example: ${capitalize(res.results[0].lexicalEntries[0].entries[0].senses[0].examples[0].text)}
                     `;
                     sendMessage(senderPSID, response);
                 },
