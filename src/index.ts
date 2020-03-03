@@ -217,8 +217,8 @@ app.post('/webhook', (req, res) => {
                 lookup.then(function (res: any) {
                     console.log(JSON.stringify(res, null, 4));
                     const response = dedent`
-                    ${body.id}
-                    ${body.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]}
+                    ${res.id}
+                    ${res.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]}
                     `;
                     sendMessage(senderPSID, response);
                 },
