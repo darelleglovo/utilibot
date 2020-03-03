@@ -136,6 +136,7 @@ app.post('/webhook', (req, res) => {
                     let title: string;
                     let link: string;
                     let newsp: string;
+                    sendMessage(senderPSID, 'Please wait..')
                     request(APIs.UTILIBOT_UTILS + `news`, { json: true }, (err, res, body) => {
                         console.log(body.message);
                         console.log('choice' ,text);
@@ -143,10 +144,14 @@ app.post('/webhook', (req, res) => {
                         title = body.message[text - 1][1];
                         link = body.message[text - 1][0];
                         newsp = body.message[text - 1][2];
-                        
                         request(APIs.UTILIBOT_UTILS + `main_news_crawl?link=${link}&title=${title}&newsp=${newsp}`, { json: true }, (err, res, body) => {
                             console.log(body);
-                            console.log('done');
+                            let response = dedent`
+                            ${body.title}
+
+                            ${body.body}
+                            `;
+                            sendMessage(senderPSID, response);
                         });
                         cache.del(senderPSID);
                     });
