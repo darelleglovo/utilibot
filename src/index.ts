@@ -316,16 +316,22 @@ app.post('/webhook', (req, res) => {
                 const a = dedent`
 				Searching:
 				> Type "search <keyword to search>"
-				> Example: search gravity
+                > Example: search gravity
+				
 				Currency exchange:
 				> Type "currexrate <base value> <base currency> to <counter currency>"
-				> Example: currexrate 5 usd to php
+                > Example: currexrate 5 usd to php
+				
 				Weather:
 				> Type "weather <city> <country>"
-				> Example: weather taguig ph
+                > Example: weather taguig ph
+				
 				Dictionary:
 				> Type "define <word>"
-				> Example: define happy
+                > Example: define happy
+				
+                News:
+				> Type "news"
                 `;
                 sendMessage(senderPSID, a);
                 break;
