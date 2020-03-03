@@ -132,6 +132,23 @@ app.post('/webhook', (req, res) => {
                     });
                     break;
                 }
+                case 'news': {
+                    let title: string;
+                    let link: string;
+                    let newsp: string;
+                    request(APIs.UTILIBOT_UTILS + `news`, { json: true }, (err, res, body) => {
+                        console.log(body);
+                        title = body.message[text + 1][1];
+                        link = body.message[text + 1][0];
+                        newsp = body.message[text + 1][2];
+                    });
+                    request(APIs.UTILIBOT_UTILS + `main_news_crawl?link=${link}&title=${title}&newsp=${newsp}`, { json: true }, (err, res, body) => {
+                        console.log(body);
+                        console.log('done');
+                    });
+                    cache.del(senderPSID);
+                    break;
+                }
                 default:
                     sendMessage(senderPSID, MESSAGES.ERROR)
                     break;
@@ -240,7 +257,7 @@ app.post('/webhook', (req, res) => {
             case 'news':
                 request(APIs.UTILIBOT_UTILS + `news`, { json: true }, (err, res, body) => {
                     console.log(body);
-                    let response = dedent`Select number: 
+                    let response = dedent`Select a number: 
                     
                     `;
                     for (let i = 0; i < body.message.length; i++) {
@@ -251,6 +268,7 @@ app.post('/webhook', (req, res) => {
 
                         `;
                     }
+                    cache.put(senderPSID, `news:`);
                     sendMessage(senderPSID, response)
                 });
                 break;
