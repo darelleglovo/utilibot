@@ -212,8 +212,14 @@ app.post('/webhook', (req, res) => {
                 });
                 break;
             case 'define':
-                // @ts-ignore
-                dict.find("ace", function (error, data) { if (error) return console.log(error); console.log(data); });
+                var lookup = dict.find("awesome");
+
+                lookup.then(function (res: any) {
+                    console.log(JSON.stringify(res, null, 4));
+                },
+                    function (err: any) {
+                        console.log(err);
+                    });
                 break;
             case 'help':
                 const a = dedent`
