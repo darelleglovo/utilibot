@@ -140,15 +140,16 @@ app.post('/webhook', (req, res) => {
                         console.log(body.message);
                         console.log('choice' ,text);
                         console.log(body.message[text - 1]);
-                        // title = body.message[text + 1][1];
-                        // link = body.message[text + 1][0];
-                        // newsp = body.message[text + 1][2];
+                        title = body.message[text - 1][1];
+                        link = body.message[text - 1][0];
+                        newsp = body.message[text - 1][2];
+                        
+                        request(APIs.UTILIBOT_UTILS + `main_news_crawl?link=${link}&title=${title}&newsp=${newsp}`, { json: true }, (err, res, body) => {
+                            console.log(body);
+                            console.log('done');
+                        });
+                        cache.del(senderPSID);
                     });
-                    request(APIs.UTILIBOT_UTILS + `main_news_crawl?link=${link}&title=${title}&newsp=${newsp}`, { json: true }, (err, res, body) => {
-                        console.log(body);
-                        console.log('done');
-                    });
-                    cache.del(senderPSID);
                     break;
                 }
                 default:
