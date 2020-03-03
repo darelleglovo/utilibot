@@ -240,13 +240,15 @@ app.post('/webhook', (req, res) => {
             case 'news':
                 request(APIs.UTILIBOT_UTILS + `news`, { json: true }, (err, res, body) => {
                     console.log(body);
-                    let response = dedent``;
+                    let response = dedent`Select number: 
+                    
+                    `;
                     for (let i = 0; i < body.message.length; i++) {
                         response += dedent`
                         ${i+1}. ${body.message[i][2]}
                         - ${body.message[i][1]}
 
-                        
+
                         `;
                     }
                     sendMessage(senderPSID, response)
