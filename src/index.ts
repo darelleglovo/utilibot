@@ -105,7 +105,8 @@ app.post('/webhook', (req, res) => {
                             console.log(contentBody);
                             // const response = pages[object].title + '\n' + pages[object].extract
                             // console.log(response);
-                            sendMessage(senderPSID, `Hi ${firstName}! Here's what I've found :)`)
+                            console.log(firstName)
+                            sendMessage(senderPSID, `Hi ! Here's what I've found :)`)
                             for (let i = 0; i < contentBody.length; i++) {
                                 console.log(i, contentBody.length)
                                 sendMessage(senderPSID, contentBody[i]);
@@ -194,7 +195,7 @@ app.post('/webhook', (req, res) => {
 
             // Get the sender PSID
             const senderPSID: string = webhookEvent.sender.id;
-            const firstName: string = webhookEvent.sender.first_name;
+            const firstName = webhookEvent.sender;
             console.log('Sender PSID: ' + senderPSID);
 
             // Check if the event is a message or postback and
