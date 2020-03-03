@@ -243,9 +243,10 @@ app.post('/webhook', (req, res) => {
                     let response = dedent``;
                     for (let i = 0; i < body.message.length; i++) {
                         response += dedent`
-                        ${i}. ${body.message[i][2]}
+                        ${i+1}. ${body.message[i][2]}
                         - ${body.message[i][1]}
 
+                        
                         `;
                     }
                     sendMessage(senderPSID, response)
