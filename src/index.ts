@@ -194,7 +194,7 @@ app.post('/webhook', (req, res) => {
                     } else if (body.cod == 200) {
                         const response = dedent`
                         ${body.name}, ${body.sys.country} weather as of now:
-                        ${capitalize(body.weather.description)}
+                        ${capitalize(body.weather[0].description)}
                         ${body.main.temp}C
 
                         By OpenWeather
