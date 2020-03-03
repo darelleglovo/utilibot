@@ -212,10 +212,15 @@ app.post('/webhook', (req, res) => {
                 });
                 break;
             case 'define':
-                var lookup = dict.find("awesome");
+                const lookup = dict.find(query[1]);
 
                 lookup.then(function (res: any) {
                     console.log(JSON.stringify(res, null, 4));
+                    const response = dedent`
+                    ${body.id}
+                    ${body.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0]}
+                    `;
+                    sendMessage(senderPSID, response);
                 },
                     function (err: any) {
                         console.log(err);
