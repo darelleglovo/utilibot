@@ -69,7 +69,7 @@ app.post('/webhook', (req, res) => {
     }
 
     // Handles messages events
-    const handleMessage = (senderPSID: string, receivedMessage: any) => {
+    const handleMessage = (senderPSID: string, firstName: string, receivedMessage: any) => {
 
         request.post(`https://graph.facebook.com/v6.0/me/messages?access_token=${GRAPH_TOKEN}`, {
             json: {
@@ -105,7 +105,7 @@ app.post('/webhook', (req, res) => {
                             console.log(contentBody);
                             // const response = pages[object].title + '\n' + pages[object].extract
                             // console.log(response);
-                            sendMessage(senderPSID, 'Here\'s what I\'ve found :)')
+                            sendMessage(senderPSID, `Hi ${firstName}! Here's what I've found :)`)
                             for (let i = 0; i < contentBody.length; i++) {
                                 console.log(i, contentBody.length)
                                 sendMessage(senderPSID, contentBody[i]);
@@ -170,7 +170,7 @@ app.post('/webhook', (req, res) => {
         }
         cache.del(senderPSID);
     }
-    const handlePostback = (senderPSID: string, receivedPostback: any) => {
+    const handlePostback = (senderPSID: string, firstName: string, receivedPostback: any) => {
 
         // Get the payload for the postback
         const payload = receivedPostback.payload;
@@ -194,16 +194,17 @@ app.post('/webhook', (req, res) => {
 
             // Get the sender PSID
             const senderPSID: string = webhookEvent.sender.id;
+            const firstName: string = webhookEvent.sender.first_name;
             console.log('Sender PSID: ' + senderPSID);
 
             // Check if the event is a message or postback and
             // pass the event to the appropriate handler function
             if (webhookEvent.message) {
                 console.log("webhookEvent.message >> TRUE")
-                handleMessage(senderPSID, webhookEvent.message);
+                handleMessage(senderPSID, firstName, webhookEvent.message);
             } else if (webhookEvent.postback) {
                 console.log("webhookEvent.postback >> TRUE")
-                handlePostback(senderPSID, webhookEvent.postback);
+                handlePostback(senderPSID, firstName, webhookEvent.postback);
             }
         });
 
