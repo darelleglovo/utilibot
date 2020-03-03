@@ -137,10 +137,10 @@ app.post('/webhook', (req, res) => {
                     let link: string;
                     let newsp: string;
                     request(APIs.UTILIBOT_UTILS + `news`, { json: true }, (err, res, body) => {
-                        console.log(body);
-                        title = body.message[text + 1][1];
-                        link = body.message[text + 1][0];
-                        newsp = body.message[text + 1][2];
+                        console.log(body.message);
+                        // title = body.message[text + 1][1];
+                        // link = body.message[text + 1][0];
+                        // newsp = body.message[text + 1][2];
                     });
                     request(APIs.UTILIBOT_UTILS + `main_news_crawl?link=${link}&title=${title}&newsp=${newsp}`, { json: true }, (err, res, body) => {
                         console.log(body);
