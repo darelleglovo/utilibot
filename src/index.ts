@@ -157,13 +157,19 @@ app.post('/webhook', (req, res) => {
                 break;
             case 'currexrate':
                 // currexrate 1 php to usd
+                let value: number;
+                let baseCurrency: string;
+                let counterCurrency: string;
+                let baseCurrencyValue: number;
+                let counterCurrencyValue: number;
                 if (query.length === 5) {
-                    const value = query[1];
-                    const baseCurrency = query[2].toUpperCase();
-                    const counterCurrency = query[4].toUpperCase();
-
+                    value = query[1];
+                    baseCurrency = query[2].toUpperCase();
+                    counterCurrency = query[4].toUpperCase();
                     request(APIs.CURRENCY_EXCHANGE + `?symbols=${baseCurrency},${counterCurrency}&base=${baseCurrency}`, { json: true }, (err, res, body) => {
-                        console.log(body);
+                        baseCurrencyValue = body.rates[baseCurrency];
+                        counterCurrencyValue = body.rates[counterCurrency];
+                        console.log(baseCurrencyValue, counterCurrencyValue);
                     });
 
                 }
