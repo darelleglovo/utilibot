@@ -4,7 +4,7 @@ import request from 'request';
 import { APIs, MESSAGES } from './variables';
 import dedent from 'dedent-js';
 import cache from 'memory-cache';
-import { capitalize } from 'lodash';
+import { capitalize, defaultTo } from 'lodash';
 
 var Dictionary = require("oxford-dictionary");
 var config = {
@@ -216,7 +216,7 @@ app.post('/webhook', (req, res) => {
 
                 lookup.then(function (res: any) {
                     console.log(JSON.stringify(res, null, 4));
-                    const example = res.results[0].lexicalEntries[0].entries[0].senses[0].examples[0].text || 'None';
+                    const example = defaultTo(res.results[0].lexicalEntries[0].entries[0].senses[0].examples[0].text, 'None');
                     const response = dedent`
                     ${capitalize(res.id)}
 
